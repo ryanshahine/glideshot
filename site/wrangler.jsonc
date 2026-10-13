@@ -11,8 +11,6 @@
   },
   "workers_dev": false,
   "preview_urls": false,
-  "routes": [
-    { "pattern": "glideshot.xyz", "custom_domain": true },
-    { "pattern": "www.glideshot.xyz", "custom_domain": true }
-  ]
+  // www.glideshot.xyz redirects here (workers/www-redirect.js).
+  "routes": [{ "pattern": "glideshot.xyz", "custom_domain": true }]
 }

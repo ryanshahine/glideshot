@@ -1,0 +1,17 @@
+.DS_Store
+
+# Swift build output and release downloads (attach dist/Glideshot.zip to a GitHub release instead)
+.build/
+.swiftpm/
+build/
+dist/
+
+# Website
+site/node_modules/
+site/dist/
+site/.ssr/
+site/*.tsbuildinfo
+
+# Local editor settings
+.vscode/
+.idea/

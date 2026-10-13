@@ -1,0 +1,46 @@
+Glideshot: screen recordings, shot like film
+============================================
+
+A Mac screen recorder with a virtual camera that tilts, zooms and follows your cursor.
+You can change the angle, focus and blur after recording.
+
+Needs a Mac with Apple silicon (M1 or newer) and macOS 14 Sonoma or later.
+Website and full install guide: https://glideshot.xyz/install/
+
+
+INSTALL (about a minute, only once)
+-------
+1. Drag Glideshot.app into your Applications folder.
+2. Double-click Glideshot. macOS says it can't verify the app, because Glideshot isn't
+   notarized by Apple. Click "Done" (not "Move to Trash").
+3. Open System Settings -> Privacy & Security, scroll down to Security, and click
+   "Open Anyway" next to the message about Glideshot. Confirm with your password.
+   The button is there for about an hour after step 2.
+   (macOS 14 Sonoma: instead of steps 2-3, Control-click Glideshot, choose Open, click Open.)
+4. Allow Screen Recording when asked (System Settings -> Privacy & Security ->
+   Screen & System Audio Recording -> Glideshot), then quit Glideshot (Cmd+Q) and open it again.
+
+Prefer Terminal? This lets macOS open it without asking:
+    xattr -dr com.apple.quarantine /Applications/Glideshot.app
+
+"Glideshot is damaged and can't be opened"? Run the Terminal command above.
+
+
+HOW IT WORKS
+------------
+1. Frame the shot in the main window, then press Record (or Ctrl+Option+Cmd+R).
+2. Press Ctrl+Option+Cmd+R again to stop. The take opens in the editor.
+3. Change the angle, zoom, blur, camera behavior and cursor while you scrub or play (Space),
+   pick formats (16:9, 9:16, 1:1, 4:5 ...) and click Export.
+
+Shortcuts (work from any app; also listed in the menu bar menu):
+    Ctrl+Option+Cmd+R    start / stop recording
+    Ctrl+Option+Cmd+L    lock the camera where the mouse is / follow again
+    Ctrl+Option+Cmd+=    zoom in
+    Ctrl+Option+Cmd+-    zoom out
+
+Takes are saved in ~/Movies/Glideshot/Takes, exports in ~/Movies/Glideshot.
+Glideshot never connects to the internet. It only records THAT a key was pressed (for
+auto-zoom), never which key. No audio yet.
+
+Free and open source: https://github.com/ryanshahine/glideshot

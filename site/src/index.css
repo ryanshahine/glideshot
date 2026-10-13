@@ -1,0 +1,328 @@
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+/* Apple-style design tokens, with Inter standing in for SF Pro. */
+@theme {
+  --font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
+
+  --color-primary: #0066cc;
+  --color-primary-focus: #0071e3;
+  --color-primary-on-dark: #2997ff;
+  --color-ink: #1d1d1f;
+  --color-ink-80: #333333;
+  --color-ink-48: #7a7a7a;
+  --color-body-muted: #cccccc;
+  --color-hairline: #e0e0e0;
+  --color-divider: #f0f0f0;
+  --color-parchment: #f5f5f7;
+  --color-pearl: #fafafc;
+  --color-tile-1: #272729;
+  --color-tile-2: #2a2a2c;
+  --color-tile-3: #252527;
+  --color-chip: #d2d2d7;
+
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+
+  --shadow-product: 3px 5px 30px 0 rgba(0, 0, 0, 0.22);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink font-sans;
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+  }
+}
+
+@utility hero-display {
+  font-size: clamp(40px, 6vw, 56px);
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.015em;
+}
+@utility display-lg {
+  font-size: clamp(32px, 4.4vw, 40px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+@utility lead {
+  font-size: clamp(21px, 2.6vw, 28px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0.004em;
+}
+@utility tagline {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.19;
+  letter-spacing: 0.011em;
+}
+@utility caption {
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+}
+@utility fine-print {
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.12px;
+}
+@utility press {
+  transition: transform 120ms ease;
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes ripple {
+  from { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* macOS-like slider: thin track with a blue fill up to the thumb (--fill). */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--color-primary-focus) var(--fill), var(--color-chip) var(--fill));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 120ms ease;
+}
+.range:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+.range:focus-visible {
+  outline: none;
+}
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.range::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-chip);
+}
+.range::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-primary-focus);
+}
+.range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Long-form text (articles, install guide). Elements wrapped in .not-article keep their own styles. */
+.article {
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  color: var(--color-ink-80);
+
+  & :where(p, ul, ol, .tip, .command, .table-wrap):not(:where(.not-article *)) {
+    margin-top: 1.1em;
+  }
+  & :where(h2):not(:where(.not-article *)) {
+    margin-top: 2.2em;
+    font-size: 28px;
+    line-height: 1.18;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+  & :where(h3):not(:where(.not-article *)) {
+    margin-top: 1.8em;
+    font-size: 21px;
+    line-height: 1.24;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  & :where(h2 + p, h3 + p, h2 + ul, h3 + ul) {
+    margin-top: 0.6em;
+  }
+  & > :first-child {
+    margin-top: 0;
+  }
+  & :where(strong) {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  & :where(a):not(:where(.not-article *)) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    text-underline-offset: 3px;
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+  & :where(ul):not(:where(.not-article *)) {
+    list-style: disc;
+    padding-left: 1.3em;
+  }
+  & :where(ol):not(:where(.not-article *, .steps)) {
+    list-style: decimal;
+    padding-left: 1.3em;
+  }
+  & :where(li + li) {
+    margin-top: 0.5em;
+  }
+  & :where(li)::marker {
+    color: var(--color-ink-48);
+  }
+  & :where(code):not(:where(pre code)) {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.88em;
+    padding: 0.12em 0.36em;
+    border-radius: 6px;
+    background: var(--color-parchment);
+    color: var(--color-ink);
+  }
+  & :where(kbd) {
+    font-family: inherit;
+    font-size: 0.9em;
+    padding: 0.08em 0.4em;
+    border-radius: 6px;
+    border: 1px solid var(--color-hairline);
+    border-bottom-width: 2px;
+    background: #fff;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  & .tip {
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: var(--color-parchment);
+    font-size: 15px;
+    line-height: 1.55;
+    & > :first-child {
+      margin-top: 0;
+    }
+    & > * + * {
+      margin-top: 0.4em;
+    }
+  }
+  & .command {
+    position: relative;
+    border-radius: 12px;
+    background: var(--color-ink);
+    color: #f5f5f7;
+    & pre {
+      overflow-x: auto;
+      padding: 14px 84px 14px 18px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    & button {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      translate: 0 -50%;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 150ms ease;
+      &:hover {
+        background: rgba(255, 255, 255, 0.24);
+      }
+    }
+  }
+  & .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-hairline);
+    border-radius: 14px;
+  }
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    line-height: 1.4;
+    & th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-ink);
+      background: var(--color-pearl);
+    }
+    & :is(th, td) {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-divider);
+      white-space: nowrap;
+    }
+    & tr:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  /* Numbered steps with a big counter (install guide). */
+  & .steps {
+    counter-reset: step;
+    margin-top: 2em;
+    & > li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 52px;
+      & + li {
+        margin-top: 2em;
+      }
+      &::before {
+        content: counter(step);
+        position: absolute;
+        left: 0;
+        top: -2px;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--color-ink);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      & > h2 {
+        margin-top: 0;
+        font-size: 21px;
+        line-height: 1.4;
+      }
+      & > p {
+        margin-top: 0.35em;
+      }
+    }
+  }
+}

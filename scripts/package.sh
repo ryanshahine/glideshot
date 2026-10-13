@@ -9,6 +9,8 @@ STAGE=dist/Glideshot
 rm -rf "$STAGE" dist/Glideshot.zip
 mkdir -p "$STAGE"
 ditto build/Glideshot.app "$STAGE/Glideshot.app"
+# Drop debug symbols: they only add size and the build machine's file paths.
+strip -S "$STAGE/Glideshot.app/Contents/MacOS/Glideshot"
 codesign --force --sign - "$STAGE/Glideshot.app"
 codesign --verify --strict "$STAGE/Glideshot.app"
 cp "scripts/READ ME.txt" "$STAGE/READ ME.txt"

@@ -40,7 +40,8 @@ Shortcuts (work from any app; also listed in the menu bar menu):
     Ctrl+Option+Cmd+-    zoom out
 
 Takes are saved in ~/Movies/Glideshot/Takes, exports in ~/Movies/Glideshot.
-Glideshot never connects to the internet. It only records THAT a key was pressed (for
-auto-zoom), never which key. No audio yet.
+Updates: choose "Check for Updates..." in the menu bar menu. That's the only time Glideshot goes
+online (it asks GitHub for the latest version number). It only records THAT a key was pressed
+(for auto-zoom), never which key. No audio yet.
 
 Free and open source: https://github.com/ryanshahine/glideshot

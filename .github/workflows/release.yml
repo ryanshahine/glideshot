@@ -1,0 +1,35 @@
+# Publishes a release when a version tag is pushed:  git tag v0.2.0 && git push origin v0.2.0
+# Builds on GitHub's Mac, signs ad hoc (no certificate or Apple account needed), and attaches
+# Glideshot.zip. The website's Download button always serves the latest release's zip.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set the app version from the tag
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${GITHUB_REF_NAME#v}" Resources/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" Resources/Info.plist
+
+      - name: Build Glideshot.zip
+        run: scripts/package.sh
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/Glideshot.zip \
+            --title "Glideshot ${GITHUB_REF_NAME#v}" \
+            --notes "$(cat .github/release-notes.md)" \
+            --generate-notes \
+            --verify-tag

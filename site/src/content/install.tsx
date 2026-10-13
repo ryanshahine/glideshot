@@ -129,7 +129,8 @@ export function InstallGuide() {
 
       <h2>Updating and uninstalling</h2>
       <p>
-        To update, download the new version and replace the app in Applications. You may need to repeat steps 3 to 5.
+        Choose <strong>Check for Updates…</strong> in Glideshot's menu bar menu to see if there's a new version. To
+        update, download it and replace the app in Applications. You may need to repeat steps 3 to 5.
       </p>
       <p>
         To uninstall, quit Glideshot and move it to the Trash. Your recordings stay in <code>~/Movies/Glideshot</code>.
@@ -140,7 +141,7 @@ export function InstallGuide() {
       <h2>Why isn't it notarized?</h2>
       <p>
         Notarization requires a paid Apple Developer Program membership, and Glideshot is a free side project. Everything
-        it does is in the <a href={SITE.repoUrl}>source code</a>: it doesn't connect to the internet, and it only records
+        it does is in the <a href={SITE.repoUrl}>source code</a>: it only goes online when you check for updates, and it only records
         <em> that</em> a key was pressed (to zoom in while you type), never which key. If you'd rather not trust a
         download, build it yourself with <code>./build.sh</code>. More background:{" "}
         <a href="/blog/open-apps-not-notarized-macos/">why macOS blocks apps that aren't notarized</a>.

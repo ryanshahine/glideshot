@@ -22,6 +22,11 @@ struct GlideshotApp: App {
                 .environmentObject(model)
                 .frame(minWidth: 1000, minHeight: 620)
         }
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates…") { Updates.check() }
+            }
+        }
     }
 }
 

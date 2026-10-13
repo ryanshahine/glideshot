@@ -41,8 +41,7 @@ export const article: Article = {
       <h3>It's free and open source</h3>
       <p>
         Glideshot costs nothing, and the source code is on <a href={SITE.repoUrl}>GitHub</a>. You can read exactly what
-        it does, build it yourself and change it. It doesn't connect to the internet, and there's no account and no
-        analytics.
+        it does, build it yourself and change it. There's no account and no analytics.
       </p>
       <h3>Every behavior is a switch</h3>
       <p>

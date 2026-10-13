@@ -117,6 +117,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         if !model.recentTakes.isEmpty { add(to: menu, "Edit Last Take", #selector(editLastTake)) }
         add(to: menu, "Show Glideshot", #selector(showMain))
         menu.addItem(.separator())
+        let version = NSMenuItem(title: "Glideshot \(Updates.currentVersion)", action: nil, keyEquivalent: "")
+        version.isEnabled = false
+        menu.addItem(version)
+        add(to: menu, "Check for Updates…", #selector(checkForUpdates))
+        menu.addItem(.separator())
         add(to: menu, "Quit Glideshot", #selector(quit), key: "q", modifiers: [.command])
     }
 
@@ -136,6 +141,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     @objc private func zoomOut() { AppModel.shared.nudgeZoom(-0.25) }
     @objc private func toggleHide() { AppModel.shared.output.hideWhileRecording.toggle() }
     @objc private func showMain() { AppModel.shared.showMainWindow() }
+    @objc private func checkForUpdates() { Updates.check() }
     @objc private func quit() { NSApp.terminate(nil) }
 
     @objc private func editLastTake() {

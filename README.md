@@ -34,8 +34,8 @@ Because it keeps the raw recording, you can change the angle, focus and blur aft
 - **A cursor you can follow.** Larger and smoothed, with click ripples, and it hides when idle if you want.
 - **Every format from one take.** 16:9, 16:10, 4:3, 1:1, 4:5 and 9:16 at 1080p, 1440p or 4K, 30 or 60 fps, H.264
   or HEVC.
-- **Private.** No network access, no account, no analytics. It only records *that* a key was pressed (for
-  auto-zoom), never which key.
+- **Private.** No account, no analytics, and it only goes online when you choose **Check for Updates…**. It only
+  records *that* a key was pressed (for auto-zoom), never which key.
 
 Every behavior has its own switch. Not there yet: audio, trimming.
 
@@ -68,7 +68,8 @@ If you prefer Terminal, `xattr -dr com.apple.quarantine /Applications/Glideshot.
 
 The shortcuts work from any app and are listed in the menu bar menu. While recording, the menu bar icon shows a red
 dot and a timer. **Hide Glideshot while recording** hides the windows, Dock icon and menu bar icon during a take.
-Takes are saved in `~/Movies/Glideshot/Takes`, exports in `~/Movies/Glideshot`.
+Takes are saved in `~/Movies/Glideshot/Takes`, exports in `~/Movies/Glideshot`. The menu bar menu shows your version,
+and **Check for Updates…** (also in the Glideshot menu) tells you when a new release is out.
 
 ## Build from source
 
@@ -84,6 +85,9 @@ open build/Glideshot.app
 `build.sh` signs ad hoc, so macOS asks for Screen Recording permission again after each rebuild. To avoid that, sign
 with your own development certificate: `SIGN_IDENTITY="Apple Development: …" ./build.sh`. `scripts/package.sh` makes
 the release download (`dist/Glideshot.zip`, always signed ad hoc).
+
+To publish a version, push a tag: `git tag v0.2.0 && git push origin v0.2.0`. GitHub Actions builds the app, signs
+it ad hoc and publishes the release with `Glideshot.zip` attached.
 
 For testing without Screen Recording permission, there's a small command line:
 

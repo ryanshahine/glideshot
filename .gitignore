@@ -15,3 +15,6 @@ site/*.tsbuildinfo
 # Local editor settings
 .vscode/
 .idea/
+
+# Cloudflare (local state)
+site/.wrangler/

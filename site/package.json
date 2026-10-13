@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --ssr src/prerender.tsx --outDir .ssr && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.5",
@@ -20,6 +21,7 @@
     "@vitejs/plugin-react": "^4.5.2",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "wrangler": "^4.150.0"
   }
 }

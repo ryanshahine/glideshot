@@ -1,0 +1,18 @@
+// Cloudflare Workers static site. `npm run deploy` builds the site and publishes dist/ to glideshot.xyz.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "glideshot",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // /blog/x serves blog/x/index.html (and redirects to /blog/x/); unknown URLs get 404.html with a 404 status.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "glideshot.xyz", "custom_domain": true },
+    { "pattern": "www.glideshot.xyz", "custom_domain": true }
+  ]
+}

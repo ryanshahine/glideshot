@@ -1,7 +1,7 @@
 // Header, footer and small pieces shared by the home page (React app) and the static pages (blog, install).
 import { useEffect, useState } from "react";
 import { SITE } from "./config";
-import { BUILD_STATS, formatCount, githubLabel, loadRepoStats, type RepoStats } from "./github";
+import { BUILD_STATS, cachedRepoStats, formatCount, githubLabel, loadRepoStats, type RepoStats } from "./github";
 
 export function Logo({ size = 22 }: { size?: number }) {
   // The app icon has a transparent margin (macOS grid), so draw it a bit larger to match the type.
@@ -74,6 +74,8 @@ export function useRepoStats() {
   const [stats, setStats] = useState<RepoStats | null>(BUILD_STATS);
   useEffect(() => {
     let alive = true;
+    const cached = cachedRepoStats(); // newer than the build, until GitHub answers
+    if (cached) setStats(cached);
     loadRepoStats().then((s) => alive && s && setStats(s));
     return () => {
       alive = false;

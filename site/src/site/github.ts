@@ -1,6 +1,7 @@
-// Stars and forks of the GitHub repo, fetched in the visitor's browser.
-// Unauthenticated GitHub API calls are rate limited per visitor (60/hour), so results are cached for an
-// hour, and failures (offline, rate limited) keep the numbers from build time.
+// Stars and forks of the GitHub repo, fetched in the visitor's browser on every page view.
+// GitHub's API answers with a one-minute cache header and an ETag, so the browser's own HTTP cache keeps
+// repeat views cheap. The last numbers are also kept in localStorage, to show right away on the next
+// visit and as a fallback when GitHub can't be reached (offline, rate limited).
 import { SITE } from "./config";
 
 export type RepoStats = { stars: number; forks: number };
@@ -8,19 +9,16 @@ export type RepoStats = { stars: number; forks: number };
 /** The numbers at build time: shown immediately (and in the pre-rendered HTML), then refreshed live. */
 export const BUILD_STATS: RepoStats | null = __GITHUB_STATS__;
 
-const KEY = `github:${SITE.repo}`;
-const FRESH_MS = 60 * 60 * 1000;
-const RETRY_MS = 10 * 60 * 1000;
+const KEY = `github-stats:${SITE.repo}`;
 
 let pending: Promise<RepoStats | null> | null = null;
 
+/** The current numbers from GitHub, or the last ones this browser saw if GitHub can't be reached. */
 export function loadRepoStats(): Promise<RepoStats | null> {
   return (pending ??= fetchStats());
 }
 
 async function fetchStats(): Promise<RepoStats | null> {
-  const cached = readCache();
-  if (cached && Date.now() - cached.at < (cached.stats ? FRESH_MS : RETRY_MS)) return cached.stats;
   try {
     const res = await fetch(`https://api.github.com/repos/${SITE.repo}`, {
       headers: { Accept: "application/vnd.github+json" },
@@ -28,30 +26,24 @@ async function fetchStats(): Promise<RepoStats | null> {
     if (!res.ok) throw new Error(String(res.status));
     const data = await res.json();
     const stats = { stars: Number(data.stargazers_count) || 0, forks: Number(data.forks_count) || 0 };
-    writeCache(stats);
+    try {
+      localStorage.setItem(KEY, JSON.stringify(stats));
+    } catch {
+      // Storage blocked (private mode): fine, nothing to remember.
+    }
     return stats;
   } catch {
-    // Keep showing the last known numbers if we have them; otherwise wait a bit before asking again.
-    if (cached?.stats) return cached.stats;
-    writeCache(null);
-    return null;
+    return cachedRepoStats();
   }
 }
 
-function readCache(): { at: number; stats: RepoStats | null } | null {
+/** The last numbers this browser saw, or null. */
+export function cachedRepoStats(): RepoStats | null {
   try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : null;
+    const saved = JSON.parse(localStorage.getItem(KEY) ?? "null");
+    return typeof saved?.stars === "number" && typeof saved?.forks === "number" ? saved : null;
   } catch {
     return null;
-  }
-}
-
-function writeCache(stats: RepoStats | null) {
-  try {
-    localStorage.setItem(KEY, JSON.stringify({ at: Date.now(), stats }));
-  } catch {
-    // Storage blocked (private mode): fine, we'll just fetch again next time.
   }
 }
 

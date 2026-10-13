@@ -1,7 +1,9 @@
 // The only script on the static pages (blog, install guide): fresh GitHub numbers and Copy buttons. No React.
 // (Styles are a <link> in the page head, see scripts/prerender.mjs.)
-import { fillGitHubButtons, loadRepoStats } from "./site/github";
+import { cachedRepoStats, fillGitHubButtons, loadRepoStats } from "./site/github";
 
+const cached = cachedRepoStats(); // newer than the build, until GitHub answers
+if (cached) fillGitHubButtons(cached);
 loadRepoStats().then((stats) => stats && fillGitHubButtons(stats));
 
 for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
